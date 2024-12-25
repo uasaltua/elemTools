@@ -17,6 +17,20 @@ class Element:
         self.sessID = sessID
         self.post_blacklist = []
         self.postDateFormat = "%Y-%m-%d %H:%M:%S"
+        self.headers = {"S-KEY": self.s_key, 'User-Agent':'ElementAPI'}
+        
+    async def send_post(self, text:str, Censoring:bool=False, clearMetaData:bool=True):
+        response = requests.post(f"{self.old_domain}/System/API/AddPost.php", headers=self.headers, data={"Text": text, "ClearMetadataIMG": clearMetaData, "CensoringIMG": Censoring})
+        if not response.status_code == 200:
+            return False
+        return True
+        
+    async def load_posts(self, F:str="LATEST", start_index:int=0):
+        response = requests.post(f"{self.old_domain}/System/API/LoadPosts.php?F={F}", headers=self.headers, data={"StartIndex": start_index})
+        if not response.status_code == 200:
+            return False
+        
+        return response.json
 
     def on_notification(self, action=False):
         def decorator(func):
