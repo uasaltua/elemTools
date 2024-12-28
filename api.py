@@ -120,7 +120,8 @@ class Element:
 
     def run(self, *args):
         if len(args) == 0:
-            with open(f"{self.sessID}.session", "r") as f:
+            with open(f"{self.sessID}.session", "r", -1, "UTF-8") as f:
+                print(f.read())
                 self.s_key = json.loads(f.read())["S-Key"]
             Element.write_log(self, "INFO", "Authorization success")
             asyncio.run(Element.init(self))
