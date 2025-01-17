@@ -33,30 +33,31 @@ await element.send_post(
 posts = await element.load_posts(F="LATEST", start_index=0)
 ```
 ```F``` — тип загружаемых постов (по умолчанию "LATEST", доступные значения: "LATEST", "TRENDING", и т.д.).
-start_index — начальный индекс загрузки (по умолчанию 0).
+```start_index``` — начальный индекс загрузки (по умолчанию 0).
 
-Обработка уведомлений
+### Обработка уведомлений
 Используйте декоратор @element.on_notification для создания обработчиков уведомлений.
 
-python
-Копіювати
-Редагувати
+```
 @element.on_notification(action="PostComment")
-async def handle_notification(event):
+async def handle_notification(event: dict):
     print("Получено уведомление:", event.notify)
-Обработка новых постов
+```
+### Обработка новых постов
 Используйте декоратор @element.on_post для создания обработчиков новых постов.
 
-python
-Копіювати
-Редагувати
+```
 @element.on_post(type="LATEST")
-async def handle_post(post):
+async def handle_post(post: dict):
     print("Новый пост:", post)
-Запуск
+```
+## Запуск
 Для запуска и инициализации используйте метод run:
 
-python
-Копіювати
-Редагувати
+```
 element.run("your_s_key")
+```
+
+Вместо your_s_key вы можете подставить свой ключ сессии
+Вместо your_s_key вы можете указать почта, пароль
+Вместо your_s_key вы можете ничего не указывать если файл с данными о сессии уже существует
