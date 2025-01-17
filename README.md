@@ -9,3 +9,54 @@
 ```python
 from elemtools import Element
 ```
+
+## Быстрый старт
+
+### Инициализация
+Создайте экземпляр класса Element:
+```
+client = Element("Любой текст", Logs=True)
+```
+
+### Основные методы
+
+#### Отправка поста
+```
+await element.send_post(
+    text="Ваш текст поста",
+    Censoring=False,          # Включение цензуры изображений (по умолчанию False)
+    clearMetaData=True        # Очистка метаданных изображений (по умолчанию True)
+)
+```
+### Загрузка постов
+```
+posts = await element.load_posts(F="LATEST", start_index=0)
+```
+```F``` — тип загружаемых постов (по умолчанию "LATEST", доступные значения: "LATEST", "TRENDING", и т.д.).
+start_index — начальный индекс загрузки (по умолчанию 0).
+
+Обработка уведомлений
+Используйте декоратор @element.on_notification для создания обработчиков уведомлений.
+
+python
+Копіювати
+Редагувати
+@element.on_notification(action="PostComment")
+async def handle_notification(event):
+    print("Получено уведомление:", event.notify)
+Обработка новых постов
+Используйте декоратор @element.on_post для создания обработчиков новых постов.
+
+python
+Копіювати
+Редагувати
+@element.on_post(type="LATEST")
+async def handle_post(post):
+    print("Новый пост:", post)
+Запуск
+Для запуска и инициализации используйте метод run:
+
+python
+Копіювати
+Редагувати
+element.run("your_s_key")
